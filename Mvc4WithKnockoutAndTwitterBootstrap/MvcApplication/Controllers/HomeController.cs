@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace MvcApplication.Controllers
@@ -28,5 +25,43 @@ namespace MvcApplication.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public JsonResult LoadContacts()
+        {
+            var contacts = new List<Contact>
+                {
+                    new Contact
+                        {
+                            FirstName = "Ben",
+                            LastName = "Doe",
+                            Title = "Developer",
+                            Email = "myemail@code.com",
+                            Phone = "888-555-6565"
+                        },
+                    new Contact
+                        {
+                            FirstName = "John",
+                            LastName = "Smith",
+                            Title = "Boss",
+                            Email = "boss@code.com",
+                            Phone = "888-555-7777"
+                        }
+                };
+            return Json(contacts);
+        }
+    }
+
+    public class Contact
+    {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Title { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
     }
 }

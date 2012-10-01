@@ -1,19 +1,21 @@
-﻿var demo = demo || {};
+﻿/*global $, ko*/
 
-$(function() {
-    demo.utils = function() {
-        var getPath = function(name) {
+var demo = demo || {};
+
+$(function () {
+    demo.utils = function () {
+        var getPath = function (name) {
             return "../Templates/HTML/_" + name + ".tmlp.html";
-        };
+        },
 
-        var renderTemplate = function(item) {
-            var file = getPath(item.name);
-            $.when($.get(file))
-                .done(function(tmplData) {
-                    $.templates({ tmpl: tmplData });
-                    item.selector($.render.tmpl(item.data));
-                });
-        };
+            renderTemplate = function (item) {
+                var file = getPath(item.name);
+                $.when($.get(file))
+                    .done(function (tmplData) {
+                        $.templates({ tmpl: tmplData });
+                        item.selector($.render.tmpl(item.data));
+                    });
+            };
 
         return {
             getPath: getPath,
@@ -22,8 +24,8 @@ $(function() {
     }();
 });
 
-$(function() {
-    demo.head = function() {
+$(function () {
+    demo.head = function () {
         var headHtml = ko.observable(),
             loadTemplate = demo.utils.renderTemplate({
                 name: "head",
@@ -37,7 +39,7 @@ $(function() {
         };
     }();
 
-    demo.body = function() {
+    demo.body = function () {
         var bodyHtml = ko.observable(),
             loadTemplate = demo.utils.renderTemplate({
                 name: "home",
@@ -51,15 +53,15 @@ $(function() {
         };
     }();
 
-    demo.contacts = function() {
+    demo.contacts = function () {
         var contactHtml = ko.observable(),
-            loadContacts = function() {
+            loadContacts = function () {
                 $.ajax({
                     url: '/Home/LoadContacts',
                     type: "POST",
                     /*contentType: "application/json; charset=utf-8",*/
                     dataType: 'json',
-                    success: function(d) {
+                    success: function (d) {
                         demo.utils.renderTemplate({
                             path: "../",
                             name: 'contacts',
@@ -81,4 +83,4 @@ $(function() {
 
     demo.contacts.loadContacts(); // Get data before binding template
     ko.applyBindings(demo.contacts);
-})
+});
